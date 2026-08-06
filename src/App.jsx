@@ -29,7 +29,7 @@ export default function App() {
     <div className="max-w-5xl mx-auto px-5 md:px-7 py-8 md:py-10 min-h-screen">
       <Header view={view} setView={(v) => { setView(v); if (v !== 'test') setPracticeSection(null) }} />
 
-      {view === 'inicio' && (
+      {(view === 'inicio' || view === 'temario') && (
         <Home
           sectionsP1={sectionsP1} cardsP1={cardsP1}
           sectionsP2={sectionsP2} cardsP2={cardsP2}
