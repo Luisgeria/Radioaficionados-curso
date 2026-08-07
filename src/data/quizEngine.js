@@ -17,7 +17,11 @@ export function buildQuizFromCards(cards, count, sectionFilter = null) {
   const picked = shuffle(pool).slice(0, Math.min(count, pool.length))
 
   return picked.map(card => {
-    const others = shuffle(pool.filter(c => c.r !== card.r)).slice(0, 3).map(c => c.r)
+    // Distractores: primero de la MISMA sección (temas afines, opciones creíbles);
+    // si esa sección no tiene suficientes, se completa con el resto de la prueba.
+    const sameSection = shuffle(cards.filter(c => c.section === card.section && c.r !== card.r))
+    const restPool = shuffle(cards.filter(c => c.section !== card.section && c.r !== card.r))
+    const others = [...sameSection, ...restPool].slice(0, 3).map(c => c.r)
     const opts = shuffle([card.r, ...others])
     return {
       q: card.p,
